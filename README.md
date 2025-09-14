@@ -6,7 +6,7 @@ This repository is a curated snapshot of that approach --> from the cloud infras
 
 ---
 
-### 1. Infrastructure ☁️ - `gcp_postgres_governor.py`
+### 1. Infrastructure ☁️ - [gcp_postgres_governor.py](src/1_infrastructure/gcp_postgres_governor.py)
 
 >I was bootstrapping a product from 0 to 1, a surprise $5,000+ cloud bill was on my mind constantly, so I developed a cloud database cost-controller.
 
@@ -22,7 +22,7 @@ My core principles are reflected here:
 
 ---
 
-### 2. Backend ⚙️ - `backend_workflow_sample.py`
+### 2. Backend ⚙️ - [backend_workflow_example.py](src/2_backend/backend_workflow_example.py)
 
 > For a startup, product stability is non-negotiable. A single instance of corrupted data can erode user trust and lead to costly support cycles.
 
@@ -35,7 +35,7 @@ The snippet orchestrates a campaign's lifecycle. The challenge wasn't just to wr
 
 ---
 
-### 3. Frontend 🎨 - `StrategicChatView.tsx`
+### 3. Frontend 🎨 - [StrategicChatView.tsx](src/3_frontend/StrategicChatView.tsx)
 
 > The user interface is where trust is won or lost, so I designed this component to feel fast, reliable, and trustworthy.
 
