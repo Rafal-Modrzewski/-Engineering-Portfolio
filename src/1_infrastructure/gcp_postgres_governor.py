@@ -7,15 +7,15 @@ ensure stability and prevent catastrophic cost spikes for an early-stage SaaS.
 My Philosophy:
 
 For a bootstrapped product, the primary infrastructure risks are not just about
-performance, but also about cost and stability. A surprise cloud bill or a database
-overload can be an existential threat! This file targets the real-world
+performance, but also about cost and stability. For a startup a surprise cloud bill or a database
+overload can be an existential threat, while for an enterprise an iefficent use of funds! This file targets the real-world
 drivers of these problems like... hanging transactions,
 connection pool exhaustion, and long-running queries that force a premature,
 expensive upgrade to the next instance tier.
 
-The system is built on a principle of Graduated Response. 
+I built the system on principle of Graduated Response (deal with the biggest fire 🔥 first without disrupting user experience) . 
 
-It first attempts to optimize, then gracefully intervenes, and only as final step takes aggressive action in a
+Script first attempts to optimize, then gracefully intervenes, and only as final step takes aggressive action in a
 critical scenario to ensure the core application remains stable and online.
 
 """
