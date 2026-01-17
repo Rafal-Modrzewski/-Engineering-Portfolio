@@ -145,8 +145,8 @@ class PostgresGovernor:
             }, severity='ERROR')
             raise
 
-    # ... (Rest of the methods would go here, such as monitor_database + graduated intervention functions) ...
-    # This portfolio focuses on the setup, philosophy, and 1 key intervention.
+    # ... (Rest of my methods would go here :) , such as monitor_database + graduated intervention functions) ...
+    # But for clarity this portfolio focuses on the most important setup, philosophy, and 1 key intervention.
  
     async def _create_db_pool(self):
         """Creates the asyncpg database connection pool."""
