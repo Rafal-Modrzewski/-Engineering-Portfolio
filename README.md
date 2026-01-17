@@ -1,6 +1,6 @@
 # Engineering Portfolio - Rafal Modrzewski
 
-Hi, I'm Rafal. My philosophy is to build resilient and cost-effective systems from the ground up.
+Hi, I'm Rafal! My philosophy is to build resilient and cost-effective AI systems from the ground up :)
 
 This repository is a curated snapshot of that approach --> from the cloud infrastructure that runs the product, down to the frontend pixel the user interacts with.
 
@@ -8,11 +8,11 @@ This repository is a curated snapshot of that approach --> from the cloud infras
 
 ### 1. Infrastructure ☁️ - [gcp_postgres_governor.py](src/1_infrastructure/gcp_postgres_governor.py)
 
->I was bootstrapping a product from 0 to 1, a surprise $5,000+ cloud bill was on my mind constantly, so I developed a cloud database cost-controller.
+>I was bootstrapping a product from 0 to 1, a surprise $10,000+ cloud bill was on my mind constantly, so I developed a cloud database cost-controller.
 
 This script is my answer: an autonomous governor for a Cloud SQL instance that proactively prevents the issues leading to catastrophic cost spikes.
 
-It's designed to target what *actually* drives infra costs for an early-stage startup. Things like connection pool exhaustion and long-running queries that force a premature, expensive upgrade.
+I designed it to target what *actually* drives infra costs for a company. Things like connection pool exhaustion and long-running queries that force a premature, expensive upgrade.
 
 My core principles are reflected here:
 
@@ -24,13 +24,13 @@ My core principles are reflected here:
 
 ### 2. Backend ⚙️ - [backend_workflow_example.py](src/2_backend/backend_workflow_example.py)
 
-> For a startup, product stability is non-negotiable. A single instance of corrupted data can erode user trust and lead to costly support cycles.
+> For a B2B startup, product stability is non-negotiable. A single instance of corrupted data can erode user trust and lead to costly support cycles.
 
-This code demonstrates how I build resilient backend systems that protect the integrity of the core business logic.
+This code shows how I build resilient AI backend systems that protect the integrity of the core business logic.
 
-The snippet orchestrates a campaign's lifecycle. The challenge wasn't just to write the logic, but to create architectural guardrails that allowed to add new features quickly without introducing bugs. My focus was on:
+The snippet orchestrates a campaign's lifecycle. The challenge was to create architectural guardrails that allowed to add new features quickly and safely without introducing bugs. My focus was on:
 
-*   **Maintainability as a Force Multiplier:** A Python decorator (`@require_valid_campaign`) cleanly separates state validation from business logic. This reusable pattern drastically reduces complexity, making the codebase safer to modify and easier for new engineers to understand. Less time fixing bugs means more time shipping features.
+*   **Maintainability as a Force Multiplier:** A Python decorator (`@require_valid_campaign`) cleanly separates state validation from business logic. This reusable pattern drastically reduces complexity, making the codebase safer to modify and easier for new engineers to understand. Less time fixing bugs means more time shipping features :)
 *   **Scalable Orchestration:** A central controller (`_route_action`) ensures the campaign lifecycle is predictable and robust. This architecture prevents countless edge cases and provides a solid foundation that can scale with the product, avoiding a costly rewrite down the line.
 
 ---
