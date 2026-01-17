@@ -1,8 +1,8 @@
 # src/2_backend/backend_workflow_example.py
 #
-# My Engineering Philosophy: Build for Velocity and Trust
+# My Engineering Philosophy: Build for Velocity 🚀 and Trust ✅
 #
-# For a startup to succeed, engineering needs to be a force multiplier.
+# For a company to succeed, engineering needs to be a force multiplier.
 # My goal is to build resilient systems that allow a team to move fast with confidence.
 # This file is a real-world example of how I create architectural "guardrails" that
 # protect the core logic, enabling rapid feature development without sacrificing stability.
@@ -12,10 +12,8 @@ from uuid import UUID
 from functools import wraps
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
-
-# (Assume models and services are imported for this example)
-# from Database.models import Campaign, User
-# from process_with_ai.ai_interface import ai_interface
+from Database.models import Campaign, User
+from process_with_ai.ai_interface import ai_interface
 
 # ---
 # 1. The Building Blocks: State & Custom Errors
@@ -48,7 +46,7 @@ class BusinessLogicError(Exception):
 # across the codebase, making it slow to change and easy to break.
 #
 # My Solution: This decorator. It centralizes all workflow rules into one clear,
-# declarative structure. This unleashes development speed because the logic for each
+# declarative structure. This 10x development speed because the logic for each
 # step becomes simple, and the system becomes safer and almost self-documenting.
 
 def require_valid_campaign(expected_status: List[str]):
