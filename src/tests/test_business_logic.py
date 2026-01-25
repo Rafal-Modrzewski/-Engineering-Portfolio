@@ -4,7 +4,6 @@ from uuid import uuid4
 from datetime import datetime
 
 # Import business logic functions and exceptions
-# Ensure 'business_logic.py' is in the root directory or PYTHONPATH
 from business_logic import (
     handle_user_request,
     start_campaign,
@@ -42,7 +41,7 @@ async def test_require_valid_campaign_success(mock_db):
     campaign_id = uuid4()
     user_id = uuid4()
     
-    # Mock Campaign and User objects returned by DB
+    # Mock Campaign and User objects
     mock_campaign = MagicMock()
     mock_campaign.status = 'draft'
     mock_campaign.business_id = uuid4()
@@ -50,11 +49,16 @@ async def test_require_valid_campaign_success(mock_db):
     mock_user = MagicMock()
     mock_user.id = user_id
     
-    # Simulate DB query returning (Campaign, User)
-    mock_db.execute.return_value.first.return_value = (mock_campaign, mock_user)
+    # --- FIX IS HERE ---
+    # We create a Synchronous MagicMock for the result object
+    # because .first() is NOT async in SQLAlchemy
+    mock_result = MagicMock()
+    mock_result.first.return_value = (mock_campaign, mock_user)
+    
+    # We tell the async db.execute to return this sync result
+    mock_db.execute.return_value = mock_result
 
     # 2. Define protected function
-    # Expects 'draft' state, implicit action 'start'
     @require_valid_campaign(expected_status=['draft'])
     async def start(db, campaign_id, user_id, **kwargs):
         return "Success"
@@ -76,7 +80,10 @@ async def test_require_valid_campaign_wrong_state(mock_db):
     mock_campaign = MagicMock()
     mock_campaign.status = 'draft' # Actual status
     
-    mock_db.execute.return_value.first.return_value = (mock_campaign, MagicMock())
+    # --- FIX IS HERE ---
+    mock_result = MagicMock()
+    mock_result.first.return_value = (mock_campaign, MagicMock())
+    mock_db.execute.return_value = mock_result
 
     # Function requires 'content_generated', but we are in 'draft'
     @require_valid_campaign(expected_status=['content_generated'])
@@ -94,8 +101,10 @@ async def test_require_valid_campaign_not_found(mock_db):
     """
     Verifies behavior when the campaign does not exist in the database.
     """
-    # Simulate DB returning None
-    mock_db.execute.return_value.first.return_value = None
+    # --- FIX IS HERE ---
+    mock_result = MagicMock()
+    mock_result.first.return_value = None # Return None immediately
+    mock_db.execute.return_value = mock_result
 
     @require_valid_campaign(['draft'])
     async def dummy_func(db, campaign_id, user_id, **kwargs):
@@ -123,32 +132,27 @@ async def test_handle_user_request_unknown_action(mock_db, mock_user_context):
         )
     
     assert "Unknown action" in str(exc_info.value) or "Unexpected error" in str(exc_info.value)
-
 @pytest.mark.asyncio
 async def test_start_campaign_flow(mock_db, mock_user_context):
     """
-    Tests the full 'start_campaign' flow:
-    1. Calls AI interface for ideas.
-    2. Persists new campaign to DB.
+    Tests the full 'start_campaign' flow.
     """
     user_id = mock_user_context['user_id']
     business_id = mock_user_context['business_id']
     user_input = {"topic": "AI Marketing Strategy"}
 
-    # Mock dependencies: AI Interface and internal create/update helper
     with patch('business_logic.ai_interface') as mock_ai, \
          patch('business_logic.create_or_update_campaign') as mock_create:
         
-        # 1. Configure AI Mock
-        mock_ai.manage_ai_session.return_value = {
+        # --- POPRAWKA: Używamy AsyncMock, żeby dało się zrobić 'await' ---
+        mock_ai.manage_ai_session = AsyncMock(return_value={
             "data": {
                 "campaign_ideas": ["Strategy A", "Strategy B"],
                 "error": None
             }
-        }
+        })
 
-        # 2. Configure DB Helper Mock
-        # Must return (Campaign, CampaignVersion) tuple
+        # DB Helper Mock
         mock_campaign_obj = MagicMock()
         mock_campaign_obj.id = uuid4()
         mock_campaign_obj.status = 'ideas_generated'
@@ -157,3 +161,43 @@ async def test_start_campaign_flow(mock_db, mock_user_context):
         mock_version_obj.id = uuid4()
 
         mock_create.return_value = (mock_campaign_obj, mock_version_obj)
+
+        # Execute
+        result = await start_campaign(
+            db=mock_db,
+            user_id=user_id,
+            business_id=business_id,
+            user_input=user_input
+        )
+
+        # Assertions
+        mock_ai.manage_ai_session.assert_called_once()
+        mock_create.assert_called_once()
+        assert result['campaign_ideas'] == ["Strategy A", "Strategy B"]
+        assert result['status'] == 'ideas_generated'
+
+@pytest.mark.asyncio
+async def test_ai_failure_handling(mock_db, mock_user_context):
+    """
+    Verifies resilient error handling when AI service fails.
+    """
+    with patch('business_logic.ai_interface') as mock_ai:
+        
+        # --- POPRAWKA: Używamy AsyncMock ---
+        mock_ai.manage_ai_session = AsyncMock(return_value={
+            "data": {
+                "error": "Service unavailable",
+                "error_type": "APIConnectionError"
+            },
+            "error": "API Error"
+        })
+
+        with pytest.raises(BusinessLogicError) as exc_info:
+            await start_campaign(
+                db=mock_db,
+                user_id=mock_user_context['user_id'],
+                business_id=mock_user_context['business_id'],
+                user_input={}
+            )
+        
+        assert "AI processing failed" in str(exc_info.value.message)
