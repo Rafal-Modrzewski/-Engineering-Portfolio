@@ -1,0 +1,41 @@
+[tool.poetry]
+name = "stratik-backend"
+version = "0.1.0"
+description = "AI-Powered B2B GTM Operating System Backend"
+authors = ["Rafal Modrzewski"]
+readme = "README.md"
+package-mode = false
+
+[tool.poetry.dependencies]
+python = "^3.12"
+fastapi = "^0.115.0"
+uvicorn = "^0.34.0"
+sqlalchemy = {extras = ["asyncio"], version = "^2.0.31"}
+asyncpg = "^0.30.0"
+pydantic = {extras = ["email"], version = "^2.8.0"}
+redis = "^5.2.0"
+aiohttp = "^3.10.0"
+google-cloud-logging = "^3.11.0"
+google-cloud-monitoring = "^2.26.0"
+google-cloud-run = "^0.10.0"
+google-generativeai = "^0.8.0"
+firebase-admin = "^6.5.0"
+python-dotenv = "^1.0.0"
+uuid7 = "^0.1.0"
+json5 = "^0.9.0"
+tenacity = "^9.0.0"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.0.0"
+pytest-asyncio = "^0.23.0"
+pytest-mock = "^3.12.0"
+httpx = "^0.27.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
+python_files = "test_*.py"
