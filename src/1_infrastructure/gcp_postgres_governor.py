@@ -1,23 +1,16 @@
 #src/1_infrastructure/gcp_postgres_governor.py
 
 """
-An autonomous governor for a Cloud SQL for PostgreSQL instance, designed to
-ensure stability and prevent catastrophic cost spikes for an early-stage SaaS.
+PostgresGovernor
+================
+An autonomous monitoring agent for Cloud SQL (PostgreSQL).
 
-My Philosophy:
+Core Functions:
+1. Proactive Monitoring: Tracks connection saturation, long-running queries, and temporary space usage via pg_stat_activity.
+2. Graduated Response: Implements a tiered intervention strategy (Warning -> Soft Terminate -> Hard Terminate) to preserve stability without unnecessary disruption.
+3. Cost Control: Prevents resource exhaustion that leads to auto-scaling spikes or forced upgrades.
 
-For a bootstrapped product, the primary infrastructure risks are not just about
-performance, but also about cost and stability. For a startup a surprise cloud bill or a database
-overload can be an existential threat, while for an enterprise an iefficent use of funds! This file targets the real-world
-drivers of these problems like... hanging transactions,
-connection pool exhaustion, and long-running queries that force a premature,
-expensive upgrade to the next instance tier.
-
-I built the system on principle of Graduated Response (deal with the biggest fire 🔥 first without disrupting user experience) . 
-
-Script first attempts to optimize, then gracefully intervenes, and only as final step takes aggressive action in a
-critical scenario to ensure the core application remains stable and online.
-
+Dependencies: google-cloud-monitoring, asyncpg, redis
 """
 
 import os
