@@ -1,12 +1,14 @@
 // src/3_frontend/StrategicChatView.tsx
 
 /*
- * This component is a self-contained, real-time chat interface. My focus here
- * was on creating a user experience that feels fast, reliable, and trustworthy,
- * which are critical for an AI-driven interaction. The key technical decisions
- * that support this are highlighted in the comments below.
+ * StrategicChatView
+ * Real-time chat interface with Optimistic UI updates and robust error recovery.
+ * 
+ * Features:
+ * - Optimistic State Management: Immediate UI feedback before API confirmation.
+ * - Auto-scrolling & Latency Handling: Maintains user context during async operations.
+ * - Strongly Typed Interfaces: Ensures integration safety with backend API.
  */
-
 
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import apiService from '../services/apiService'; 
@@ -43,13 +45,7 @@ const StrategicChatView: React.FC<StrategicChatViewProps> = ({
 }) => {
     const { currentUser } = useAuth(); // Get current Firebase user for username/avatar
 
-    /*
-     * --- Robust State Handling to Build Trust ---
-     * The UI's predictability relies on managing all possible states.
-     * `isSending` handles the loading state (disabling buttons, showing spinners).
-     * `error` communicates failures clearly to the user, preventing confusion.
-     * This ensures the user is never left guessing what the application is doing.
-     */
+    // --- State Management: Messages, Loading, and Error Handling ---
 
     const [messages, setMessages] = useState<ChatMessage[]>(initialMessages);
     const [newMessage, setNewMessage] = useState("");
@@ -85,13 +81,9 @@ const StrategicChatView: React.FC<StrategicChatViewProps> = ({
             avatar: `https://avatar.vercel.sh/${currentUser?.email || 'user'}.png?s=32` // Vercel avatar service
         };
 
-        /*
-         * --- Optimistic UI for a Fluid Experience ---
-         * The user's message is added to the UI *immediately*, before the API
-         * call completes. This makes the application feel instantaneous and responsive.
-         * The `try/catch` block below handles the crucial step of reverting this
-         * change if the API call fails, ensuring UI consistency.
-         */
+        // --- Optimistic UI Update ---
+            // Update local state immediately and handle rollback on API failure 
+            // to ensure UI consistency.
 
         setMessages(prev => [...prev, userMsg]); // Optimistically add user message to UI
         const currentInput = newMessage.trim(); // Capture current input for API call
