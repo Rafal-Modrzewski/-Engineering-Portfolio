@@ -1,11 +1,15 @@
 # src/2_backend/backend_workflow_example.py
-#
-# My Engineering Philosophy: Build for Velocity 🚀 and Trust ✅
-#
-# For a company to succeed, engineering needs to be a force multiplier.
-# My goal is to build resilient systems that allow a team to move fast with confidence.
-# This file is a real-world example of how I create architectural "guardrails" that
-# protect the core logic, enabling rapid feature development without sacrificing stability.
+
+"""
+GTM Campaign Workflow Engine
+========================
+Implements a deterministic Finite State Machine (FSM) for B2B campaign orchestration.
+
+Key Architectural Patterns:
+- Decorator-based state validation (@require_valid_campaign) ensures data integrity.
+- Centralized routing strategy reduces cyclomatic complexity.
+- Strict separation of concerns between orchestration and business logic.
+"""
 
 from typing import Dict, Any, Optional, List
 from uuid import UUID
@@ -41,13 +45,11 @@ class BusinessLogicError(Exception):
 # ---
 # 2. A Decorator for Clarity and Safety
 # ---
-# The Challenge: A campaign workflow is a state machine. The business rules for what can
-# happen when (e.g., 'approve_content' requires 'ideas_approved') can get scattered
-# across the codebase, making it slow to change and easy to break.
-#
-# My Solution: This decorator. It centralizes all workflow rules into one clear,
-# declarative structure. This 10x development speed because the logic for each
-# step becomes simple, and the system becomes safer and almost self-documenting.
+
+# RATIONALE: Centralizes state transition logic to prevent business logic 
+# fragmentation. Ensures that all campaign operations are pre-validated 
+# for authorization and state integrity in a single, auditable location.
+
 
 def require_valid_campaign(expected_status: List[str]):
     """
@@ -94,10 +96,7 @@ def require_valid_campaign(expected_status: List[str]):
 # ---
 # 3. The Central Router
 # ---
-# This is the central router. It maps a simple string `action` from the API
-# to the correct, decorator-protected business logic function. This pattern provides
-# a predictable and scalable blueprint for the application's core logic, ensuring
-# that adding new features is always a clean and straightforward process.
+
 
 async def handle_campaign_action(
     db: AsyncSession,
@@ -126,11 +125,6 @@ async def handle_campaign_action(
 # ---
 # 4. Function Example for the Business Logic
 # ---
-
-# This is the result of the architecture above. With the guardrails in place, the
-# business logic is clean, focused, and free of boilerplate. It's concerned only
-# with its specific task—creating value—confident that the system's integrity
-# is already guaranteed.
 
 @require_valid_campaign(['ideas_approved'])
 async def generate_content(
