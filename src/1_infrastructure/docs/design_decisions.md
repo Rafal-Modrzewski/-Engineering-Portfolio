@@ -16,7 +16,7 @@ Binary interventions (on/off) cause:
 95% saturation → CRITICAL (shed load)
 ````
 
-## Real Example
+### Real Example
 
 Scenario: Traffic spike causes brief jump to 72% utilization
 
@@ -33,7 +33,7 @@ With graduated system:
 - If sustained >30s at 85%+, then intervene
 - Result: No unnecessary action
 
-Why Priority-Based Termination?
+## Why Priority-Based Termination?
 
 Alternatives Considered
 
@@ -79,6 +79,7 @@ ORDER BY priority, duration DESC
 
 ## Why 30-Second Monitoring Interval?
 
+
 ### Trade-off Analysis
 
 
@@ -115,15 +116,13 @@ pythonresource.setrlimit(resource.RLIMIT_AS, (512 * 1024 * 1024, -1))
 ````
 Effect: Governor crashes before impacting database.
 
-Why 512MB?
 
-Governor baseline: ~50MB
+## Why 512MB?
 
-Peak (during intervention): ~200MB
-
-Safety margin: 2.5x = 512MB
-
-Database memory: Unaffected
+- Governor baseline: ~50MB
+- Peak (during intervention): ~200MB
+- Safety margin: 2.5x = 512MB
+- Database memory: Unaffected
 
 
 ## Why CTE-Based Ranking Query?
@@ -136,6 +135,7 @@ idle_conns = await conn.fetch("SELECT pid FROM pg_stat_activity WHERE state='idl
 idle_tx_conns = await conn.fetch("SELECT pid FROM pg_stat_activity WHERE state='idle in transaction'")
 active_conns = await conn.fetch("SELECT pid FROM pg_stat_activity WHERE state='active'")
 ````
+
 
 # Combine and sort in Python
 
@@ -167,6 +167,7 @@ SELECT * FROM ranked_connections LIMIT 5;
 - PostgreSQL-optimized sorting
 
 ---
+
 
 ## Why Circuit Breaker?
 
