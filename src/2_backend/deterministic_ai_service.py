@@ -1,4 +1,4 @@
-# src/2_backend/deterministic_ai_service.py.py
+# src/2_backend/deterministic_ai_service.py
 
 """
 Production AI Service
