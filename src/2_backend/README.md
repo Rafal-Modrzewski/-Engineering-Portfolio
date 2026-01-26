@@ -22,7 +22,7 @@ def _robust_json_parse(self, raw_text: str):
     # Strips Markdown, handles trailing commas
     return json5.loads(clean_text)
 ```
-**Handles:** GPT-4 markdown wrappers, malformed JSON
+**Handles:** Gemini markdown wrappers, malformed JSON
 
 ### 3. Orchestration (Separation of Concerns)
 - Prompt construction
@@ -31,9 +31,9 @@ def _robust_json_parse(self, raw_text: str):
 - State transition
 
 ## Prod Impact
-- **Zero invalid state errors** in Q4 2025
+- **Prevented invalid state errors.** in Q4 2025
 - **94% reduction** in JSON parsing failures
-- **100% audit trail** for compliance
+- **Robust audit trail** for compliance
 
 ## Prod Note
 In production, this integrates with:
