@@ -1,7 +1,7 @@
 # src/2_backend/deterministic_ai_service.py
 
 """
-Production AI Service
+prod AI Service
 =====================
 A deterministic layer ensuring reliability between business logic and non-deterministic LLMs.
 
@@ -10,7 +10,7 @@ Core Architecture:
 2. Output Guardrails: Robust JSON5 parsing and markdown stripping to handle LLM volatility.
 3. Orchestration: Strict separation of concerns between workflow routing and AI inference.
 
-Production Impact:
+Prod Impact:
 - Zero AI-caused workflow failures (Q4 2025)
 - 100% state transition audit trail for compliance
 - 94% reduction in JSON parsing errors vs raw LLM calls
@@ -104,18 +104,18 @@ class AIService:
         """
         campaign = await db.get(Campaign, campaign_id)
         
-        # 1. Prompt Construction (simplified for portfolio)
+        # 1. Prompt construction (simplified for portfolio)
         prompt = self._construct_prompt(campaign, user_input)
         
-        # 2. Calling LLM and Cleaning Output
+        # 2. Calling LLM and cleaning output
         try:
             raw_response = await self._call_llm_provider(prompt) # Mocked for portfolio
             parsed_content = self._robust_json_parse(raw_response)
             
-            # 3. Schema Validation (The "Self-Healing" Logic)
+            # 3. Schema validation 
             validated_content = self._validate_content_schema(parsed_content)
             
-            # 4. State Transition
+            # 4. State transition
             # (Logic to save to DB and update version would go here)
             
             return {
@@ -133,12 +133,12 @@ class AIService:
     # ---
     def _robust_json_parse(self, raw_text: str) -> Dict:
         """
-        Production-tested JSON parser for LLMs. 
+        prod-tested JSON parser for LLMs. 
         Handles Markdown code blocks, trailing commas, and incomplete JSON.
         """
         stripped_text = raw_text.strip()
         
-        # 1. Advanced Markdown Stripping (Handling Gemini artifacts)
+        # 1. Advanced markdown stripping (handling Gemini artifacts)
         md_start_json = "```json"
         md_start_generic = "```"
         md_end = "```"
@@ -151,11 +151,11 @@ class AIService:
         elif stripped_text.startswith(md_start_generic) and stripped_text.endswith(md_end):
             stripped_text = stripped_text[len(md_start_generic):-len(md_end)].strip()
 
-        # 2. Lenient Parsing with JSON5 (Handles comments & trailing commas)
+        # 2. Lenient parsing with JSON5 (Handles comments & trailing commas)
         try:
             return json5.loads(stripped_text)
         except (json.JSONDecodeError, json5.JSONDecodeError) as parse_error:
-            # In production: Log the raw string to GCP for prompt engineering analysis
+            # In prod: Log the raw string to GCP for prompt engineering analysis
             raise BusinessLogicError(
                 message=f"LLM hallucinated invalid JSON structure: {parse_error}", 
                 details={"raw_text_snippet": raw_text[:200]}
@@ -174,14 +174,14 @@ class AIService:
 
     async def _call_llm_provider(self, prompt: str) -> str:
         """
-        Production wrapper for LLM API calls.
-        In production: Integrates with rate_limiter.py and 
+        prod wrapper for LLM API calls.
+        In prod: Integrates with rate_limiter.py and 
         service_controls.py to prevent cost spirals.
         
         Portfolio Note: Actual implementation uses OpenAI SDK 
         with retry logic and cost tracking.
         """
-        # --- Portfolio Mock (in prod actual API call) ---
+        # --- Portfolio mock (in prod actual API call) ---
         return '```json\n{"headline": "AI that works", ...}\n```'
 
     def _construct_prompt(self, campaign, user_input):
@@ -212,7 +212,6 @@ Example Flow:
    ↓
 5. Return structured response to API
 
-Interview Note: This pattern prevented 100% of "invalid state" 
-bugs in production. Before this, we had 3-5 incidents/week where 
+This pattern prevented 100% of "invalid state"bugs in prod. Before this, we had 3-5 incidents/week where 
 users could trigger AI calls in invalid campaign states, and approx 19% failure rate when AI returned incorrect Json schema with markdown.
 """
