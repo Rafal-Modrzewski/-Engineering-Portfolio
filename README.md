@@ -65,7 +65,7 @@ I built Stratik.co (B2B SaaS) from scratch. As lean company, I had to architect 
 
 ---
 
-## Quick Stats (Q4 2024)
+## Quick Stats (Q4 2025)
 
 | Metric | Result |
 | :--- | :--- |
