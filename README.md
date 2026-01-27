@@ -58,9 +58,9 @@ Scaling AI products creates three existential business risks:
 
 ## Systems Architecture
 
-To respect the reviewer's time, this repository showcases a **curated selection** of the most architecturally significant components. 
+To respect the reviewer's time, this repository shows a ** selection** of the most architecturally important components. 
 
-In production, these systems operate within a broader governance framework I architected, including:
+In prod, these systems operate within a broader governance framework I architected, including:
 *   **Cloud Run Controller:** Prevents serverless bill shocks via restricted revision jailing.
 *   **API Rate Limiters:** Redis-backed circuit breakers to prevent LLM loops.
 *   **Service Controls:** Per-user quota management to enforce SaaS margin targets.
