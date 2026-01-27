@@ -16,37 +16,52 @@ Scaling AI products creates three existential business risks:
 ## The Solution: A Three-Layer Defense System
 
 ### 🛡️ [Layer 1: Infrastructure Governance](src/1_infrastructure)
-**PostgresGovernor (Autonomous Database Agent)**
-Prevents infrastructure cost spirals by enforcing strict saturation limits.
+
+*   **Business Problem:** Uncontrolled DB scaling ($420 → $3,000 spikes) due to AI-driven connection saturation.
+*   **Architectural Solution:** Autonomous agent that enforces saturation ceilings via priority-based connection termination (CTE-logic).
+*   **Tech**: Python, Asyncpg, GCP Monitoring API.
+
+**PostgresGovernor (Autonomous Database Agent)** Prevents infrastructure cost spirals by enforcing strict saturation limits.
 - **Economic Impact:** $1,355/mo in peak net cost avoidance (75% reduction vs unmanaged spikes).
 - **Operational Impact:** Reduced P0 database incidents from 8/quarter to 2.
 
-[View Code →](src/1_infrastructure/)
+[View Code →](src/1_infrastructure/gcp_postgres_governor.py)
 
 ### 🤖 [Layer 2: AI Orchestration](src/2_backend/)
-**Deterministic State Machine**
-Wraps non-deterministic LLMs in rigid, auditable workflows.
+
+*  **Business Problem**: Non-deterministic nature of LLMs poses a compliance and stability risk in B2B workflows.
+*  **Solution**: A strict State Machine architecture enforced via Python decorators.
+  - **Logic**: The @require_valid_campaign decorator (see tests/) and lenient parsing with JSON5 enforces rigid state transitions. This ensures that while AI content is probabilistic, the business workflow remains 100% deterministic and auditable.
+  - **Testing**: Unit tests (Pytest) verify state integrity and error handling without external dependencies.
+  - **Tech**: Python 3.12, FastAPI, SQLAlchemy (Async), State Machine Pattern.
+
+**Deterministic State Machine** Wraps non-deterministic LLMs in rigid, auditable workflows.
 - **Economic Impact:** Eliminated $1,000+ wasted tokens on invalid request states.
 - **Operational Impact:** Robust audit trail for B2B compliance; 94% reduction in parsing failures.
 
-[View Code →](src/2_backend/)
+[View Code →](src/2_backend/deterministic_ai_service.py)
 
 ### ⚡ [Layer 3: User Experience](src/3_frontend/)
-**Optimistic UI & State Reconciliation**
-Decouples expensive inference latency from perceived user speed.
+
+* **Business Problem**: High latency of LLM inference degrades user trust and retention.
+* **Solution**: Optimistic UI patterns and robust state management.
+
+**Optimistic UI & State Reconciliation** Decouples expensive inference latency from perceived user speed.
 - **Product Impact:** Maintained 4.2s perceived latency (vs 12s actual).
 - **Technical Innovation:** State reconciliation pattern for async AI streams.
+- **Tech**: TypeScript, React, Optimistic Updates.
 
-[View Code →](src/3_frontend/)
+  
+[View Code →](src/3_frontend/StrategicChatView.tsx)
 
 ---
 
-## The "Hidden" Ecosystem (Systems Architecture)
+## Systems Architecture
 
 To respect the reviewer's time, this repository showcases a **curated selection** of the most architecturally significant components. 
 
 In production, these systems operate within a broader governance framework I architected, including:
-*   **Cloud Run Controller:** Prevents serverless bill shocks via "Restricted Revision" jailing.
+*   **Cloud Run Controller:** Prevents serverless bill shocks via restricted revision jailing.
 *   **API Rate Limiters:** Redis-backed circuit breakers to prevent LLM loops.
 *   **Service Controls:** Per-user quota management to enforce SaaS margin targets.
 
@@ -95,6 +110,6 @@ tests/test_business_logic.py ......                                [100%]
 
 ## Contact
 **Rafal Modrzewski**  
-Lead AI Architect | Architecture Strategy  
+Lead AI Architect & Founder @ Stratik.co   | Architecture Strategy  
 [LinkedIn](https://www.linkedin.com/in/rafal-modrzewski-350b6a182/) 
 
