@@ -2,12 +2,12 @@
 
 /*
  * StrategicChatView
- * Real-time chat interface with Optimistic UI updates and robust error recovery.
+ * Real-time chat interface with optimistic UI updates and robust error recovery.
  * 
  * Features:
- * - Optimistic State Management: Immediate UI feedback before API confirmation.
- * - Auto-scrolling & Latency Handling: Maintains user context during async operations.
- * - Strongly Typed Interfaces: Ensures integration safety with backend API.
+ * - Optimistic state management: Immediate UI feedback before API confirmation.
+ * - Auto-scrolling and latency handling: Maintains user context during async operations.
+ * - Strongly typed interfaces: Ensures integration safety with backend API.
  */
 
 import React, { useState, useEffect, useRef, useCallback } from 'react';
@@ -32,7 +32,7 @@ export interface ChatMessage {
 interface StrategicChatViewProps {
     campaignId: string; // ID of the 'strategic_discussion' campaign
     discussionTitle: string; // Title to display in the header (e.g., "Discussing: Refine C-Suite Brand Voice")
-    initialMessages?: ChatMessage[]; // Optional initial messages to pre-populate the chat
+    initialMessages?: ChatMessage[]; //  initial messages to pre-populate the chat
     onClose: () => void; // Callback to navigate back to the dashboard or previous view
 }
 
@@ -93,7 +93,7 @@ const StrategicChatView: React.FC<StrategicChatViewProps> = ({
 
         try {
             // Call the backend endpoint to continue the chat
-            // This endpoint should append the user's message to conversation_history,
+            // This endpoint  appends the user's message to conversation_history,
             // trigger AI response, append AI response, and return the AI's message.
             const response = await apiService.post(
                 `/campaign/${campaignId}/chat/message`, // UPDATED ENDPOINT
@@ -149,9 +149,9 @@ const StrategicChatView: React.FC<StrategicChatViewProps> = ({
 
         try {
             // Call backend with a "regenerate" action, providing context (e.g., last user message)
-            // This endpoint should remove the last AI entry from history, regenerate, and add new AI entry.
+            // This endpoint removes the last AI entry from history, regenerate, and add new AI entry.
             const response = await apiService.post(
-                `/campaign/${campaignId}/chat/regenerate`, // Conceptual endpoint, defined in api.py (or business_logic.py)
+                `/campaign/${campaignId}/chat/regenerate`, 
                 { last_user_message_content: lastUserMessage.text } // Payload with context for regeneration
             );
             
@@ -172,7 +172,6 @@ const StrategicChatView: React.FC<StrategicChatViewProps> = ({
         } catch (apiError) {
             console.error("Error regenerating response:", apiError);
             setError("Failed to regenerate AI response. Please try again.");
-            // If regeneration fails, you might want to re-add the old AI message or keep the UI in loading state
         } finally {
             setIsSending(false); // Reset sending state
         }
@@ -189,7 +188,6 @@ const StrategicChatView: React.FC<StrategicChatViewProps> = ({
                     </Button>
                     <h1 className="text-xl font-semibold text-slate-800 truncate" title={discussionTitle}>{discussionTitle}</h1>
                 </div>
-                {/* Optional: Add in the future other header controls here like campaign settings, share, etc. */}
             </header>
 
             {/* Chat Messages Area */}
