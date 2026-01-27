@@ -15,29 +15,29 @@ Scaling AI products creates three existential business risks:
 
 ## The Solution: A Three-Layer Defense System
 
-### 🛡️ [Layer 1: Infrastructure Governance](./1_infrastructure/)
+### 🛡️ [Layer 1: Infrastructure Governance](src/1_infrastructure)
 **PostgresGovernor (Autonomous Database Agent)**
 Prevents infrastructure cost spirals by enforcing strict saturation limits.
 - **Economic Impact:** 1,355/mo in peak net cost avoidance (75% reduction vs unmanaged spikes).
 - **Operational Impact:** Reduced P0 database incidents from 8/quarter to 2.
 
-[View Code →](./1_infrastructure/)
+[View Code →](src/1_infrastructure/)
 
-### 🤖 [Layer 2: AI Orchestration](./2_backend/)
+### 🤖 [Layer 2: AI Orchestration](src/2_backend/)
 **Deterministic State Machine**
 Wraps non-deterministic LLMs in rigid, auditable workflows.
 - **Economic Impact:** Eliminated wasted tokens on invalid request states.
 - **Operational Impact:** Robust audit trail for B2B compliance; 94% reduction in parsing failures.
 
-[View Code →](./2_backend/)
+[View Code →](src/2_backend/)
 
-### ⚡ [Layer 3: User Experience](./3_frontend/)
+### ⚡ [Layer 3: User Experience](src/3_frontend/)
 **Optimistic UI & State Reconciliation**
 Decouples expensive inference latency from perceived user speed.
 - **Product Impact:** Maintained 4.2s perceived latency (vs 12s actual).
 - **Technical Innovation:** State reconciliation pattern for async AI streams.
 
-[View Code →](./3_frontend/)
+[View Code →](src/3_frontend/)
 
 ---
 
