@@ -23,22 +23,28 @@ from uuid import UUID
 from functools import wraps
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
+from dataclasses import dataclass
 
 # Mock imports for portability if models don't exist
 try:
     from Database.models import Campaign, User
 except ImportError:
-    from dataclasses import dataclass
-    @dataclass
-    class Campaign:
-        id: UUID
-        business_id: UUID
-        status: str
-        name: str = "Test Campaign"
-    @dataclass
-    class User:
-        id: UUID
-        business_id: UUID
+    from sqlalchemy.orm import declarative_base
+    from sqlalchemy import Column, String, UUID as sqlalchemy_uuid
+    
+    Base = declarative_base()
+    
+    class Campaign(Base):
+        __tablename__ = 'campaign_mock'
+        id = Column(sqlalchemy_uuid, primary_key=True)
+        business_id = Column(sqlalchemy_uuid)
+        status = Column(String)
+        name = Column(String, default="Test Campaign")
+
+    class User(Base):
+        __tablename__ = 'user_mock'
+        id = Column(sqlalchemy_uuid, primary_key=True)
+        business_id = Column(sqlalchemy_uuid)
 
 # --- CONFIGURATION ---
 CAMPAIGN_STATES = {
