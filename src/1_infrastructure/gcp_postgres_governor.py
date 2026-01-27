@@ -55,7 +55,7 @@ class PostgresGovernor:
 
     def __init__(self):
         # Operational Thresholds
-        # Tuned for: db-g1-small / db-custom-1-3840 (Standard SaaS Entry Tier)
+        # Db: baseline: db-custom-2-7680 
         # Calibration based on 6 months of production data
         self.THRESHOLDS = {
             'connection_saturation': {
