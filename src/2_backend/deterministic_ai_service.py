@@ -11,8 +11,8 @@ Core Architecture:
 3. Orchestration: Strict separation of concerns between workflow routing and AI inference.
 
 Prod Impact:
-- Zero AI-caused workflow failures (Q4 2025)
-- 99.9% state transition audit trail for compliance
+- Negligible number of invalid-state AI calls (99.9% worflow determinism) (Q4 2025)
+- Robust state transition audit trail for compliance
 - 94% reduction in JSON parsing errors vs raw LLM calls
 """
 
