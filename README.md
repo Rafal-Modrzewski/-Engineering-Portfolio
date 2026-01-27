@@ -15,7 +15,7 @@ Scaling AI products creates three existential business risks:
 
 ## The Solution: A Three-Layer Defense System
 
-### 🛡️ [Layer 1: Infrastructure Governance](src/1_infrastructure)
+### 🛡️ [Layer 1: Infrastructure Governance](src/infrastructure)
 
 *   **Business Problem:** Uncontrolled DB scaling ($420 → $3,000 spikes) due to AI-driven connection saturation.
 *   **Architectural Solution:** Autonomous agent that enforces saturation ceilings via priority-based connection termination (CTE-logic).
@@ -25,9 +25,9 @@ Scaling AI products creates three existential business risks:
 - **Economic Impact:** $1,355/mo in peak net cost avoidance (75% reduction vs unmanaged spikes).
 - **Operational Impact:** Reduced P0 database incidents from 8/quarter to 2.
 
-[View Code →](src/1_infrastructure/gcp_postgres_governor.py)
+[View Code →](src/infrastructure/gcp_postgres_governor.py)
 
-### 🤖 [Layer 2: AI Orchestration](src/2_backend/)
+### 🤖 [Layer 2: AI Orchestration](src/backend/)
 
 *  **Business Problem**: Non-deterministic nature of LLMs poses a compliance and stability risk in B2B workflows.
 *  **Solution**: A strict State Machine architecture enforced via Python decorators.
@@ -39,9 +39,9 @@ Scaling AI products creates three existential business risks:
 - **Economic Impact:** Eliminated $1,000+ wasted tokens on invalid request states.
 - **Operational Impact:** Robust audit trail for B2B compliance; 94% reduction in parsing failures.
 
-[View Code →](src/2_backend/deterministic_ai_service.py)
+[View Code →](src/backend/deterministic_ai_service.py)
 
-### ⚡ [Layer 3: User Experience](src/3_frontend/)
+### ⚡ [Layer 3: User Experience](src/frontend/)
 
 * **Business Problem**: High latency of LLM inference degrades user trust and retention.
 * **Solution**: Optimistic UI patterns and robust state management.
@@ -52,7 +52,7 @@ Scaling AI products creates three existential business risks:
 - **Tech**: TypeScript, React, Optimistic Updates.
 
   
-[View Code →](src/3_frontend/StrategicChatView.tsx)
+[View Code →](src/frontend/StrategicChatView.tsx)
 
 ---
 
@@ -108,8 +108,8 @@ Running the suite validates both the Infrastructure Governor and the determinist
 ```
 =========================== test session starts ============================
 collected 14 items
-tests/1_infrastructure/test_governor.py ......... [ 64%]
-tests/2_backend/test_ai_service.py ..... [100%]
+tests/infrastructure/test_governor.py ......... [ 64%]
+tests/backend/test_ai_service.py ..... [100%]
 ======================== 14 passed in 0.82s ========================
 ```
 

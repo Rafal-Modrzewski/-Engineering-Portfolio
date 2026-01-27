@@ -55,7 +55,7 @@ The AIService is protected by a test suite ensuring its deterministic behavior a
 - FSM config integrity (ensures state logic is tamper-proof)
 
 **Test Suite Status:**
-```$ pytest tests/2_backend/
+```$ pytest tests/backend/
 
 test.py::test_guardrail_valid_flow PASSED                  [ 20%]
 test.py::test_guardrail_invalid_state PASSED               [ 40%]
@@ -65,4 +65,4 @@ test.py::test_robust_json_parsing_failure PASSED           [100%]
 
 ========================== 5 passed in 0.34s ===========================
 ```
-[View Tests →](src/tests/2_backend)
+[View Tests →](src/tests/backend)

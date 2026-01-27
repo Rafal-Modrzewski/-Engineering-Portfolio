@@ -13,7 +13,7 @@ import asyncio
 import time
 from unittest.mock import AsyncMock, MagicMock, patch, call
 
-from src.1_infrastructure.gcp_postgres_governor import PostgresGovernor
+from src.infrastructure.gcp_postgres_governor import PostgresGovernor
 
 @pytest.fixture
 def mock_logger():

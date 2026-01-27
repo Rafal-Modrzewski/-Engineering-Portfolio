@@ -202,7 +202,7 @@ The PostgresGovernor is validated by a dedicated test suite covering its core re
 **Test Suite Status:**
 
 ```
-$ pytest tests/1_infrastructure/
+$ pytest tests/infrastructure/
 test_governor.py::test_graduated_response_warning_level PASSED                     [ 11%]
 test_governor.py::test_graduated_response_intervention_level PASSED                [ 22%]
 test_governor.py::test_graduated_response_critical_level PASSED                    [ 33%]
