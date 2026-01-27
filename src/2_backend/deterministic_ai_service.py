@@ -12,7 +12,7 @@ Core Architecture:
 
 Prod Impact:
 - Zero AI-caused workflow failures (Q4 2025)
-- 100% state transition audit trail for compliance
+- 99.9% state transition audit trail for compliance
 - 94% reduction in JSON parsing errors vs raw LLM calls
 """
 
