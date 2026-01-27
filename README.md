@@ -101,6 +101,10 @@ pip install -r requirements.txt
 
 **2. Run the full test suite:**
 
+```bash
+python3 -m pytest
+```
+
 #### ✅ Expected Outcome
 
 Running the suite validates both the Infrastructure Governor and the deterministic AI service logic, ensuring end-to-end reliability.
@@ -113,7 +117,7 @@ tests/backend/test_ai_service.py ..... [100%]
 ======================== 14 passed in 0.82s ========================
 ```
 
-[View Tests →](src/tests/)
+[View Tests →](tests/)
 
 ## Contact
 **Rafal Modrzewski**  
