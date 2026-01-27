@@ -90,23 +90,30 @@ I built Stratik.co (B2B SaaS) from scratch. As lean company, I had to architect 
 
 ---
 
-## 🛠️ How to Validate (Run Tests)
+## How to Validate (Run Tests)
 
-This repository includes a test suite to verify the business logic integrity using **Pytest** and **AsyncMock**.
+This repo includes a robust test suite to verify the core deterministic AI service (AI Orchestration) and cloud Infrastructure Governance.
 
+**1. Install dependencies:**
 ```bash
-# 1. Install dependencies
 pip install -r requirements.txt
-pip install pytest pytest-asyncio
-
-# 2. Run the test suite
-python -m pytest
 ```
 
-### 4. Expected test outcome
+**2. Run the full test suite:**
 
-tests/test_business_logic.py ......                                [100%]
-======================== 6 passed, 1 warning in 0.97s =========================
+#### ✅ Expected Outcome
+
+Running the suite validates both the Infrastructure Governor and the deterministic AI service logic, ensuring end-to-end reliability.
+
+```
+=========================== test session starts ============================
+collected 14 items
+tests/1_infrastructure/test_governor.py ......... [ 64%]
+tests/2_backend/test_ai_service.py ..... [100%]
+======================== 14 passed in 0.82s ========================
+```
+
+[View Tests →](src/tests/)
 
 ## Contact
 **Rafal Modrzewski**  
