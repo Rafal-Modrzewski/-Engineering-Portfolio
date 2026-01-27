@@ -15,9 +15,7 @@ from datetime import datetime, timezone
 # Import the governor (adjust path as needed)
 import sys
 import os
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-from gcp_postgres_governor import PostgresGovernor
-
+from src.infrastructure.gcp_postgres_governor import PostgresGovernor
 
 @pytest.fixture
 def mock_logger():
