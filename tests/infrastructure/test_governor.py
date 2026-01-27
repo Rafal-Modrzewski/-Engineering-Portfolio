@@ -161,7 +161,7 @@ async def test_long_running_query_termination(governor, mock_db_components):
 
 def test_resource_limits_are_configured(governor, mock_logger):
     """Test that memory limits are set during initialization."""
-    with patch('gcp_postgres_governor.resource.setrlimit') as mock_setrlimit:
+    with patch('src.infrastructure.gcp_postgres_governor.resource.setrlimit') as mock_setrlimit:
         gov = PostgresGovernor()
         
         # Should set RLIMIT_AS to 512MB
