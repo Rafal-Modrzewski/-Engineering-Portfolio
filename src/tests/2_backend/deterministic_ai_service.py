@@ -4,8 +4,7 @@ from unittest.mock import AsyncMock, MagicMock, patch
 from sqlalchemy.ext.asyncio import AsyncSession
 
 # Import the deterministic_ai_service 
-from deterministic_ai_service import AIService, BusinessLogicError, Campaign, CAMPAIGN_STATES
-
+from src.backend.deterministic_ai_service import AIService, BusinessLogicError, Campaign, CAMPAIGN_STATES
 # --- FIXTURES ---
 
 @pytest.fixture
