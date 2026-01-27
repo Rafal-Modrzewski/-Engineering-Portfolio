@@ -74,7 +74,7 @@ Of the three systems, **PostgresGovernor** is the most **architecturally interes
 
 ### ✅ **Measurable Impact**
 - 75% cost reduction 
-- Zero DB outages in Q4 2025
+- Zero critical DB outages in Q4 2025
 - 94% autonomous recovery rate
 
 ### ✅ **Production Complexity**
