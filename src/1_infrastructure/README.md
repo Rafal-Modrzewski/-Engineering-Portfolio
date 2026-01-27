@@ -189,8 +189,33 @@ For a different architecture (e.g., event-driven), I'd build different governors
 
 ---
 
+### ✅ Testing & Reliability
+
+The PostgresGovernor is validated by a dedicated test suite covering its core reliability features.
+
+**Key Scenarios Tested:**
+- Graduated Response Logic (70% -> 85% -> 95%)
+- Priority-Based Connection Termination Algorithm
+- Circuit Breaker Engagement and Reset Logic
+- Self-Imposed Resource Limits (Memory & Process Safety)
+
+**Test Suite Status:**
+
+$ pytest tests/1_infrastructure/
+test_governor.py::test_graduated_response_warning_level PASSED                     [ 11%]
+test_governor.py::test_graduated_response_intervention_level PASSED                [ 22%]
+test_governor.py::test_graduated_response_critical_level PASSED                    [ 33%]
+test_governor.py::test_priority_based_termination_logic PASSED                     [ 44%]
+test_governor.py::test_circuit_breaker_triggers_after_three_failures PASSED        [ 55%]
+test_governor.py::test_circuit_breaker_resets_after_timeout PASSED                 [ 66%]
+test_governor.py::test_telemetry_gathering_handles_errors_gracefully PASSED        [ 77%]
+test_governor.py::test_long_running_query_termination PASSED                       [ 88%]
+test_governor.py::test_resource_limits_are_configured PASSED                       [100%]
+========================== 9 passed in 0.46s ===========================
+
+
 ## Explore the Code
 
-- **Start here:** [PostgresGovernor](./database/gcp_postgres_governor.py) (most complex)
+- **Start here:** [PostgresGovernor](./gcp_postgres_governor.py) 
 
 **Testing Strategy:** See `tests/` directory.
