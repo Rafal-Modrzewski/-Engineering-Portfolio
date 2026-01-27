@@ -219,4 +219,4 @@ test_governor.py::test_resource_limits_are_configured PASSED                    
 
 - **Start here:** [PostgresGovernor](./gcp_postgres_governor.py) 
 
-**Testing Strategy:** See `tests/` directory.
+**Testing Strategy:** [View Tests →](src/tests/)
