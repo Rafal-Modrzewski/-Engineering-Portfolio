@@ -7,8 +7,8 @@
 
 ## The Problem I Solve
 Scaling AI products creates three existential business risks:
-1. **Financial Risk** — Ungoverned LLM APIs and database auto-scaling can destroy margins.
-2. **Operational Risk** — Non-deterministic AI behavior creates support tickets and compliance failures.
+1. **Financial Risk** - Ungoverned LLM APIs and database auto-scaling can destroy margins.
+2. **Operational Risk** - Non-deterministic AI behavior creates support tickets and compliance failures.
 3. **Product Risk** — High inference latency (10s+) kills user retention and conversion.
 
 ---
@@ -18,7 +18,7 @@ Scaling AI products creates three existential business risks:
 ### 🛡️ [Layer 1: Infrastructure Governance](src/1_infrastructure)
 **PostgresGovernor (Autonomous Database Agent)**
 Prevents infrastructure cost spirals by enforcing strict saturation limits.
-- **Economic Impact:** 1,355/mo in peak net cost avoidance (75% reduction vs unmanaged spikes).
+- **Economic Impact:** $1,355/mo in peak net cost avoidance (75% reduction vs unmanaged spikes).
 - **Operational Impact:** Reduced P0 database incidents from 8/quarter to 2.
 
 [View Code →](src/1_infrastructure/)
@@ -26,7 +26,7 @@ Prevents infrastructure cost spirals by enforcing strict saturation limits.
 ### 🤖 [Layer 2: AI Orchestration](src/2_backend/)
 **Deterministic State Machine**
 Wraps non-deterministic LLMs in rigid, auditable workflows.
-- **Economic Impact:** Eliminated wasted tokens on invalid request states.
+- **Economic Impact:** Eliminated $1,000+ wasted tokens on invalid request states.
 - **Operational Impact:** Robust audit trail for B2B compliance; 94% reduction in parsing failures.
 
 [View Code →](src/2_backend/)
